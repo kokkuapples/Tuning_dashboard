@@ -70,9 +70,10 @@ def on_message(client, userdata, msg):
 @callback(Output('depth-graph', 'figure'), 
             Input('interval', 'n_intervals'))
 def update_graph_live(n):
-    fig = plotly.tools.make_subplots(rows=2, cols=3, vertical_spacing=0.2,
+    fig = plotly.tools.make_subplots(rows=3, cols=3, vertical_spacing=0.2,
                                 subplot_titles=("Z-Axis", "Pitch", "Roll",
-                                                "ForceZ", "ForcePitch", "ForceRoll"))
+                                                "ForceZ", "ForcePitch", "ForceRoll",
+                                                "speedZ"))
     # if in test mode use random data
     if test_mode:
         data.insert_random()
@@ -96,6 +97,9 @@ def update_graph_live(n):
     fig.append_trace(go.Line(x=data["time"], y=data["force_z"], line_color="green", name="forceZ"), 2, 1)
     fig.append_trace(go.Line(x=data["time"], y=data["force_pitch"], line_color="green", name="forcePitch"), 2, 2)
     fig.append_trace(go.Line(x=data["time"], y=data["force_roll"], line_color="green", name="forceRoll"), 2, 3)
+
+    # Plot vertical speed
+    fig.append_trace(go.Line(x=data["time"], y=data["Zspeed"], line_color="black", name="speedZ"), 3, 1)
     
 
     fig.update_layout(height=800, width=1400, showlegend=False)
@@ -137,8 +141,8 @@ columns = ["Zacc", "Zspeed", "bar_state", "controller_state", "depth", "external
            "motor_thrust_max_xy", "motor_thrust_max_z", "pitch", "pwm", "reference_pitch",
            "reference_roll", "reference_z", "roll", "rov_armed", "yaw"]
 
-if len(sys.argv) > 1 and isinstance(sys.argv[1], int):
-    test_mode = sys.argv[1]
+if len(sys.argv) > 1: 
+    test_mode = bool(sys.argv[1])
 else:
     test_mode = False
 
