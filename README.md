@@ -1,17 +1,17 @@
-# Tuning_dashboard
+# Tuning Dashboard
 Dashboard that helps tuning ROV controller with Oceanix
 
-## Avvio
-una volta attivato l'environment della GUI, digitare sul terminale
+## Setup and Startup
+Create a virtual environment with python and install the dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
-Per runnare la dashboard, sempre sul terminale
+To run the dashboard
 
 ```bash
 python dashboard.py
 ```
 
-Infine per aprirla, nel browser copirare l'indirizzo: http://127.0.0.1:8050/
+To open it, copy the following address into your browser: http://127.0.0.1:8050/
