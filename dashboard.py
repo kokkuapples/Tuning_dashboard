@@ -78,6 +78,13 @@ def update_graph_live(n):
     if test_mode:
         data.insert_random()
     
+    
+    # Convert to numeric
+    columns2int = ["depth", "reference_z", "pitch", "reference_pitch", "roll", "force_z", 
+                   "reference_roll", "force_pitch", "force_roll", "Zspeed"] 
+    data.df[columns2int] = data.df[columns2int].apply(pd.to_numeric)
+    
+
     # Plot depth, pitch e roll con relativi riferimenti
     fig.append_trace(go.Line(x=data["time"], y=data["depth"], line_color="blue", name="depth"), 1, 1)
     fig.append_trace(go.Line(x=data["time"], y=data["reference_z"], line_color="red", name="refZ"), 1, 1)
@@ -88,17 +95,12 @@ def update_graph_live(n):
     fig.append_trace(go.Line(x=data["time"], y=data["roll"], line_color="blue", name="roll"), 1, 3)
     fig.append_trace(go.Line(x=data["time"], y=data["reference_roll"], line_color="red", name="refRoll"), 1, 3)
 
-    # Plot delle accelerazioni assiali
-    #fig.append_trace(go.Line(x=data["time"], y=data["accX"], line_color="black", name="accX"), 2, 1)
-    #fig.append_trace(go.Line(x=data["time"], y=data["accY"], line_color="black", name="accY"), 2, 2)
-    #fig.append_trace(go.Line(x=data["time"], y=data["accZ"], line_color="black", name="accZ"), 2, 3)
-    
     # Plot della forza in output dal controllore
     fig.append_trace(go.Line(x=data["time"], y=data["force_z"], line_color="green", name="forceZ"), 2, 1)
     fig.append_trace(go.Line(x=data["time"], y=data["force_pitch"], line_color="green", name="forcePitch"), 2, 2)
     fig.append_trace(go.Line(x=data["time"], y=data["force_roll"], line_color="green", name="forceRoll"), 2, 3)
 
-    # Plot vertical speed
+    # Plot axial velocities
     fig.append_trace(go.Line(x=data["time"], y=data["Zspeed"], line_color="black", name="speedZ"), 3, 1)
     
 
